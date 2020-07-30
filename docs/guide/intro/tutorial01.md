@@ -221,15 +221,20 @@ go-admin
     sqlite3.db
 ```
 
-在 `go-admin/router/router.go` 中，输入以下代码：
+在 `go-admin/router/init_router.go` 的 `InitExamplesRouter(r, authMiddleware)` 后面，输入以下代码：
 
 ```go
-func InitRouter() *gin.Engine {
+articleRouter(r)
+```
 
-    r := gin.New()
+并在 `go-admin/router/router.go` 中输入
 
-    r.GET("/articleList",apis.GetArticleList)
+```go
+func articleRouter(r *gin.Engine) *gin.Engine {
 
+	r.GET("/articleList",apis.GetArticleList)
+
+	return r
 }
 ```
 
@@ -241,12 +246,12 @@ go build
 ./go-admin server -c=config/settings.dev.yml
 ```
 
-用你的浏览器访问 http://localhost:8000/articleList，你应该能够看见 "{"code":200,"data":"hello world ！","msg":""}" ，这是你在接口中定义的。
+用你的浏览器访问 http://localhost:8000/articleList ，你应该能够看见 "{"code":200,"data":"hello world ！","msg":""}" ，这是你在接口中定义的。
 
 
 :::tip 404 page not found
 
-如果你在这里得到了一个错误页面，检查一下你是不是正访问着http://localhost:8000/articleList 而不应该是 http://localhost:8000/。
+如果你在这里得到了一个错误页面，检查一下你是不是正访问着 http://localhost:8000/ ， 正确的页面应该是 http://localhost:8000/articleList 。
 
 :::
 
